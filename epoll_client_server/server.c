@@ -108,7 +108,9 @@ int main(int argc, char* argv[])
 						inet_ntoa(addr.sin_addr), ntohs(addr.sin_port));
 			} else {
 				// 处理已经连接的客户端
-				if(!events[n].events & EPOLLIN) continue; // 该程序只对读事件进行操作，其他的时间不予处理
+				//if(!events[n].events & EPOLLIN) continue; // 该程序只对读事件进行操作，其他的时间不予处理
+				if (!(events[n].events & EPOLLIN)) continue;
+
 				char read_buffer[1024]={0};
 				printf("Reading file descriptor '%d' -- ", events[n].data.fd);
 				size_t bytes_read = read(events[n].data.fd, read_buffer, sizeof(read_buffer));
